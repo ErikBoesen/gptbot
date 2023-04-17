@@ -39,7 +39,6 @@ def process_text(text):
     data = {
         'model': 'gpt-3.5-turbo',
         'messages': [{'role': 'user', 'content': text}],
-        'max_tokens': 50,
         'temperature': 0.5,
         'stop': ['\n']
     }
