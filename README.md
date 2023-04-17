@@ -21,7 +21,15 @@ Deploy using serverless:
 serverless deploy
 ```
 
-Later, to view the logs:
+Configure your OpenAI key as an environment variable:
+```sh
+aws lambda update-function-configuration --function-name papaya-dev-receive --environment "Variables={OPENAI_API=abcdef1234567890}"
+```
+
+The bot should now be ready to receive messages!
+
+## Logs
+To view the logs:
 ```sh
 serverless logs -f receive
 ```
