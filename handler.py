@@ -14,7 +14,7 @@ def receive(event, context):
     message = json.loads(event['body'])
 
     bot_id = message['bot_id']
-    response = process_text(message)
+    response = process_message(message)
     if response:
         send(response, bot_id)
 
@@ -28,7 +28,7 @@ def process_message(message):
     if message['sender_type'] != 'bot':
         text = message['text']
         if text.startswith(PREFIX):
-            return process_text(text)
+            return process_text(text.lstrip(PREFIX))
 
 def process_text(text):
     headers = {
