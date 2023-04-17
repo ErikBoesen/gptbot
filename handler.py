@@ -47,7 +47,7 @@ def process_text(text):
     response = requests.post(OPENAI_ENDPOINT, headers=headers, json=data)
 
     if response.status_code == 200:
-        return response.json()
+        return response.json()['choices'][0]['message']['content']
     return 'Error: ' + response.text.strip()
 
 
@@ -59,5 +59,3 @@ def send(text, bot_id):
         'text': text,
     }
     r = requests.post(url, json=message)
-
-print(process_text('How are you?'))
