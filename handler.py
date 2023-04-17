@@ -7,7 +7,7 @@ import random
 import json
 
 PREFIX = '>'
-OPENAI_ENDPOINT = 'https://api.gpt-3.5-turbo.com/query'
+OPENAI_ENDPOINT = 'https://api.openai.com/v1/chat/completions'
 OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
 
 def receive(event, context):
@@ -37,17 +37,18 @@ def process_text(text):
     }
 
     data = {
-        'prompt': text,
+        'model': 'gpt-3.5-turbo',
+        'messages': [{'role': 'user', 'content': text}],
         'max_tokens': 50,
         'temperature': 0.5,
         'stop': ['\n']
     }
 
-    response = requests.post(url, headers=headers, data=json.dumps(data))
+    response = requests.post(OPENAI_ENDPOINT, headers=headers, json=data)
 
     if response.status_code == 200:
-        return response.json()['choices'][0]['text']
-    return 'Error: ' + response.text
+        return response.json()['choices'][0]
+    return 'Error: ' + response.text.strip()
 
 
 def send(text, bot_id):
@@ -58,3 +59,5 @@ def send(text, bot_id):
         'text': text,
     }
     r = requests.post(url, json=message)
+
+print(process_text('How are you?'))
