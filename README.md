@@ -23,7 +23,7 @@ serverless deploy
 
 Configure your OpenAI key as an environment variable:
 ```sh
-aws lambda update-function-configuration --function-name papaya-dev-receive --environment "Variables={OPENAI_API=abcdef1234567890}"
+aws lambda update-function-configuration --function-name papaya-dev-receive --environment "Variables={OPENAI_API_KEY=abcdef1234567890}"
 ```
 
 The bot should now be ready to receive messages!
