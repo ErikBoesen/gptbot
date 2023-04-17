@@ -47,7 +47,7 @@ def process_text(text):
     response = requests.post(OPENAI_ENDPOINT, headers=headers, json=data)
 
     if response.status_code == 200:
-        return response.json()['message']['content']
+        return response.json()
     return 'Error: ' + response.text.strip()
 
 
