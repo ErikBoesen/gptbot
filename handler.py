@@ -9,6 +9,7 @@ import json
 PREFIX = '+'
 OPENAI_ENDPOINT = 'https://api.openai.com/v1/chat/completions'
 OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
+MAX_MESSAGE_LENGTH = 1000
 
 def receive(event, context):
     message = json.loads(event['body'])
@@ -52,6 +53,13 @@ def process_text(text):
 
 def send(text, bot_id):
     url = 'https://api.groupme.com/v3/bots/post'
+
+    if len(message) > MAX_MESSAGE_LENGTH:
+        # If text is too long for one message, split it up over several
+        for block in [message[i:i + MAX_MESSAGE_LENGTH] for i in range(0, len(message), MAX_MESSAGE_LENGTH)]:
+            send(block, bot_id)
+            time.sleep(0.3)
+        return
 
     message = {
         'bot_id': bot_id,
