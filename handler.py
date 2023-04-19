@@ -54,9 +54,9 @@ def process_text(text):
 def send(text, bot_id):
     url = 'https://api.groupme.com/v3/bots/post'
 
-    if len(message) > MAX_MESSAGE_LENGTH:
+    if len(text) > MAX_MESSAGE_LENGTH:
         # If text is too long for one message, split it up over several
-        for block in [message[i:i + MAX_MESSAGE_LENGTH] for i in range(0, len(message), MAX_MESSAGE_LENGTH)]:
+        for block in [text[i:i + MAX_MESSAGE_LENGTH] for i in range(0, len(text), MAX_MESSAGE_LENGTH)]:
             send(block, bot_id)
             time.sleep(0.3)
         return
